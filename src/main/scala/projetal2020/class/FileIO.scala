@@ -4,17 +4,17 @@ import java.io.IOException
 
 import play.api.libs.json.JsObject
 import projetal2020.exception.IncorrectDataException
+import better.files._
 
-import scala.io.Source
 import scala.util.{Failure, Success, Try}
 
 object FileIO {
 
   def read(filename: String): Try[List[String]] = {
     try {
-      val bufferedSource = Source.fromFile(filename)
-      val lines = bufferedSource.getLines().toList
-      bufferedSource.close
+      val f = File(filename)
+
+      val lines = f.lines.toList
       Success(lines)
     } catch {
       case _: IOException =>
