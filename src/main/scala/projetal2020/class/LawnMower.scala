@@ -180,9 +180,19 @@ class LawnMower(x: Int, y: Int, direction: Char, gridSize: (Int, Int)) {
   def moveInstruction(instructions: Array[Char]): Try[JsObject] = {
     val debut: JsObject = infoJson()
     for (instruction: Char <- instructions: Array[Char]) {
-      move(instruction)
+      try {
+        move(instruction)
+      } catch {
+        case _: IncorrectDataException =>
+          Failure(
+            new IncorrectDataException(
+              "Instructions not recognized, please use the letter : A, G or D !"
+            )
+          )
+      }
     }
     val fin: JsObject = infoJson()
     Success(toJson(debut, fin, instructions))
   }
+
 }
