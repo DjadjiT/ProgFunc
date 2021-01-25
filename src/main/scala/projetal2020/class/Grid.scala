@@ -8,7 +8,7 @@ import scala.util.{Failure, Success}
 class Grid(x: Int, y: Int) {
   val width: Int = x
   val height: Int = y
-  val lawnMowerStringOutPut: ArrayBuffer[JsObject] = ArrayBuffer()
+  val lawnMowerJsonOutPut: ArrayBuffer[JsObject] = ArrayBuffer()
 
   def createLawnMowerAndGiveInstructions(
       line: String,
@@ -23,7 +23,7 @@ class Grid(x: Int, y: Int) {
     )
     lawnMower.moveInstruction(instructions.toCharArray) match {
       case Success(value) =>
-        lawnMowerStringOutPut.insert(lawnMowerStringOutPut.size, value)
+        lawnMowerJsonOutPut.insert(lawnMowerJsonOutPut.size, value)
       case Failure(exception) => println(exception)
     }
   }
@@ -31,7 +31,7 @@ class Grid(x: Int, y: Int) {
   def getJson(): JsObject = {
     Json.obj(
       "limite"    -> Json.obj("x" -> width, "y" -> height),
-      "tondeuses" -> lawnMowerStringOutPut
+      "tondeuses" -> lawnMowerJsonOutPut
     )
   }
 }
